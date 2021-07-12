@@ -20,7 +20,7 @@ services:
             context: .
             dockerfile: ./compose/django/Dockerfile
         image: django
-        depends-on:
+        depends_on:
             - postgres
         volumes:
             - .:/app
