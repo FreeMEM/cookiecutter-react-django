@@ -1,39 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import axios from 'axios';
-import './App.css';
+import React, { Component } from "react";
+import Root from "./Root";
+import { Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import Home from "./components/Home";
+import Signup from "./components/account/Signup";
+import Login from "./components/login/Login";
+import ResendActivation from "./components/account/ResendActivation";
+import ActivateAccount from "./components/account/ActivateAccount";
+import ResetPassword from "./components/account/ResetPassword";
+import ResetPasswordConfirm from "./components/account/ResetPasswordConfirm";
 
-require('dotenv').config()
+import Dashboard from "./components/dashboard/Dashboard";
 
-function handleSubmit(event) {
-  const text = document.querySelector('#char-input').value
+import requireAuth from "./utils/RequireAuth";
 
-  axios
-    .get(`/char_count?text=${text}`).then(({data}) => {
-      document.querySelector('#char-count').textContent = `${data.count} characters!`
-    })
-    .catch(err => console.log(err))
+import axios from "axios";
+
+if (window.location.origin === "http://localhost:3000") {
+  axios.defaults.baseURL = "http://127.0.0.1:8000";
+} else {
+  axios.defaults.baseURL = window.location.origin;
 }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <div>
-        <label htmlFor='char-input'>How many characters does </label>
-        <input id='char-input' type='text' placeholder="my string"/><span> </span>
-        <button onClick={handleSubmit}>have?</button>
-        <div>
-          <h3 id='char-count' data-testid="char-count"> </h3>
-        </div>
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <Root>
+          <ToastContainer hideProgressBar={true} newestOnTop={true} />
+          <Switch>
+            <Route path="/signup" component={Signup} />
+            <Route path="/login" component={Login} />
+            <Route path="/dashboard" component={requireAuth(Dashboard)} />
+            <Route exact path="/" component={Home} />
+            <Route path="/resend_activation" component={ResendActivation} />
+            <Route path="/activate/:uid/:token" component={ActivateAccount} />
+            <Route path="/send_reset_password/" component={ResetPassword} />
+            <Route
+              path="/reset_password/:uid/:token"
+              component={ResetPasswordConfirm}
+            />
+          </Switch>
+        </Root>
       </div>
-      </header>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
