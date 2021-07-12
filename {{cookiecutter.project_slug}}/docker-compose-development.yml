@@ -1,5 +1,10 @@
 version: '2'
 
+volumes:
+    local_postgres_data: {}
+    local_postgres_data_backups: {}
+    static_volume: {}
+
 services:
     nginx: 
         restart: unless-stopped
