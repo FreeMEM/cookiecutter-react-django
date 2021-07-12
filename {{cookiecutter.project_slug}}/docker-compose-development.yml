@@ -14,13 +14,15 @@ services:
             - ./compose/nginx/development:/etc/nginx/conf.d
         depends_on: 
             - backend
-    backend:
+    django:
         restart: unless-stopped
         build:
             context: .
-            dockerfile: ./compose/backend/development/Dockerfile
+            dockerfile: ./compose/django/Dockerfile
+        image: django
         volumes:
-            
+            - ./.envs/.django  
+            - ./.envs/.postgres    
         entrypoint: /app/docker/backend/wsgi-entrypoint.sh
         volumes:
             - .:/app
