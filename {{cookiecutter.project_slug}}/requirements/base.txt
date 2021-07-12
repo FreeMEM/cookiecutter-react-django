@@ -25,13 +25,6 @@ argon2-cffi==20.1.0
 # Static files
 whitenoise==5.2.0
 
-# Celery
-tornado==6.1
-redis==3.5.3
-django-redis==4.12.1
-celery==5.1.0
-#flower
-
 # Cors Headers
 django-cors-headers
 
