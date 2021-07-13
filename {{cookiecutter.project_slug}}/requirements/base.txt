@@ -32,3 +32,9 @@ django-cors-headers
 # django-rest-swagger #obsolete not supported by django 3+
 # replaced by drf-yasg
 drf-yasg
+
+
+djoser
+markdown
+
+
