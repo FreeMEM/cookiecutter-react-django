@@ -22,7 +22,6 @@ COPY ./requirements /requirements
 RUN pip install -r /requirements/local.txt
 
 ADD ./backend /app/backend
-ADD ./django /app/django
 ADD ./compose /app/compose
 
 
