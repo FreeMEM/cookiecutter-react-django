@@ -32,7 +32,10 @@ services:
             - static_volume:/app/backend/server/django_static
         env_file:
             - ./.envs/.django  
-            - ./.envs/.postgres    
+            - ./.envs/.postgres
+        entrypoint: /app/compose/django/wsgi-entrypoint.sh
+        expose:
+            - 8000
     postgres:
         build:
             context: .

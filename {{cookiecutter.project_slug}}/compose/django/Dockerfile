@@ -21,13 +21,18 @@ RUN pip install gunicorn
 COPY ./requirements /requirements
 RUN pip install -r /requirements/local.txt
 
-COPY ./compose/django/entrypoint /entrypoint
-RUN sed -i 's/\r//' /entrypoint
-RUN chmod +x /entrypoint
+ADD ./backend /app/backend
+ADD ./django /app/django
+ADD ./compose /app/compose
 
-COPY ./compose/django/start /start
-RUN sed -i 's/\r//' /start
-RUN chmod +x /start
+
+# COPY ./compose/django/entrypoint /entrypoint
+# RUN sed -i 's/\r//' /entrypoint
+# RUN chmod +x /entrypoint
+
+# COPY ./compose/django/start /start
+# RUN sed -i 's/\r//' /start
+# RUN chmod +x /start
 
 # COPY ./compose/django/celery/worker/start /start-celeryworker
 # RUN sed -i 's/\r//' /start-celeryworker
