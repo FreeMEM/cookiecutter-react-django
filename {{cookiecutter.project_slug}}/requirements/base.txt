@@ -34,7 +34,7 @@ django-cors-headers
 drf-yasg
 
 
-djoser
-markdown
+djoser==2.0.5
+markdown==3.3 
 
 
