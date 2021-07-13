@@ -14,8 +14,10 @@ RUN apk update \
     # https://docs.djangoproject.com/en/dev/ref/django-admin/#dbshell
     && apk add postgresql-client
 
-
+WORKDIR /app
 # Requirements are installed here to ensure they will be cached.
+RUN pip install --upgrade pip
+RUN pip install gunicorn
 COPY ./requirements /requirements
 RUN pip install -r /requirements/local.txt
 
@@ -39,6 +41,6 @@ RUN chmod +x /start
 # RUN sed -i 's/\r//' /start-flower
 # RUN chmod +x /start-flower
 
-WORKDIR /app
+
 
 ENTRYPOINT ["/entrypoint"]
