@@ -1,6 +1,17 @@
 version: '2'
 
 services:
+    
+    backend:
+        restart: unless-stopped
+        build:
+            context: .
+            dockerfile: ./docker/backend/Dockerfile
+        entrypoint: /app/docker/backend/wsgi-entrypoint.sh
+        volumes:
+            - static_volume:/app/backend/server/django_static
+        expose:
+            - 8000
     nginx: 
         restart: unless-stopped
         build:
@@ -22,17 +33,7 @@ services:
         volumes:
             - ./docker/nginx/certbot/conf:/etc/letsencrypt
             - ./docker/nginx/certbot/www:/var/www/certbot
-        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"       
-    backend:
-        restart: unless-stopped
-        build:
-            context: .
-            dockerfile: ./docker/backend/Dockerfile
-        entrypoint: /app/docker/backend/wsgi-entrypoint.sh
-        volumes:
-            - static_volume:/app/backend/server/django_static
-        expose:
-            - 8000        
+        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 volumes:
     static_volume: {}
